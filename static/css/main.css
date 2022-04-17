@@ -1,0 +1,33 @@
+table, tr, th, td {
+    border: 3px solid black;
+    color: black;
+    table-layout: fixed;
+    width: 90%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+  }
+
+legend {
+    font-weight:  bold;
+    position:  relative;
+}
+
+caption {
+  font-size:  1.4em;
+  font-weight:  bold;
+  position:  relative;
+}
+
+h1 {
+    color: rebeccapurple;
+}
+
+a {
+  font-size:  18;
+}
+
+body {
+    background-image: url("/static/img/background.jpg")
+}
