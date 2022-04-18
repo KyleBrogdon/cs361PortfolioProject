@@ -12,9 +12,7 @@
     {% block body %}
     <br>
     <br>
-        {% for name in imageName %}
-        <img src = "{{url_for('static', filename="img/" + name)}}">
-        {% endfor %}
+        <img src = "{{url_for('static', filename="img/" + imageName)}}">
     {% endblock %}
 </body>
 </html>

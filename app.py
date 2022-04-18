@@ -12,8 +12,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     if request.method == 'GET':
-        if request.values.get('getWallpapers') is not None:
+        if request.values.get('randomWallpapers') == "randomWallpapers":
             pass  # call to microservice scrapper here
+            return redirect(url_for("randomWallpaper"))
+        if request.values.get('getWallpapers') == 'getWallpapers':
             return redirect(url_for("wallpapers"))
     return render_template("index.html")
 
@@ -22,8 +24,16 @@ def index():
 
 # code citation, how to return img directory and url https://stackoverflow.com/questions/26052561/how-to-list-all-image-files-in-flask-static-subdirectory
 def wallpapers():
-    imageName = choice(os.listdir(os.path.join(app.static_folder, 'img')))  # microservices will download to static/img
+    imageName = os.listdir(os.path.join(app.static_folder, 'img'))  # microservices will download to static/img
+    print(imageName)
     return render_template('wallpapers.html', imageName = imageName)
+
+@app.route('/randomWallpaper')
+
+# code citation, how to return img directory and url https://stackoverflow.com/questions/26052561/how-to-list-all-image-files-in-flask-static-subdirectory
+def randomWallpaper():
+    imageName = choice(os.listdir(os.path.join(app.static_folder, 'img')))  # microservices will download to static/img
+    return render_template('randomWallpaper.html', imageName = imageName)
 
 
 ##### Listener #####
