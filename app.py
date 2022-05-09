@@ -2,9 +2,19 @@ from flask import Flask, render_template, json, redirect, url_for
 from flask import request
 from random import choice
 import os
+import time
+import urllib.request
+# code citation download and save from url https://stackoverflow.com/questions/8286352/how-to-save-an-image-locally-using-python-whose-url-address-i-already-know
+import requests
+import random
+# code citation select random line from file https://www.w3resource.com/python-exercises/file/python-io-exercise-15.php
 
 app = Flask(__name__)
 
+
+def randomImg():
+    img = open("bg_image_urls.txt").read().splitlines()
+    return random.choice(img)
 
 ##### Routes #####
 
@@ -13,7 +23,14 @@ app = Flask(__name__)
 def index():
     if request.method == 'GET':
         if request.values.get('randomWallpapers') == "randomWallpapers":
-            pass  # call to microservice scrapper here
+            f = open("image_request.txt", "w")
+            f.write("fetch_images")
+            f.close()
+            img = randomImg()
+            cwd = os.getcwd()
+            cwd = cwd + "\static\img"
+            print(cwd)
+            urllib.request.urlretrieve(img, os.path.join(cwd, os.path.basename(img)))
             return redirect(url_for("randomWallpaper"))
         if request.values.get('getWallpapers') == 'getWallpapers':
             return redirect(url_for("wallpapers"))
@@ -25,7 +42,6 @@ def index():
 # code citation, how to return img directory and url https://stackoverflow.com/questions/26052561/how-to-list-all-image-files-in-flask-static-subdirectory
 def wallpapers():
     imageName = os.listdir(os.path.join(app.static_folder, 'img'))  # microservices will download to static/img
-    print(imageName)
     return render_template('wallpapers.html', imageName = imageName)
 
 @app.route('/randomWallpaper')
