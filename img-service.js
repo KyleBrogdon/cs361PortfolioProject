@@ -27,15 +27,15 @@ async function getImages() {
         const imageurlArray = await scrapeImages(
           "https://www.freeimages.com/premium/animals-wildlife"
         );
-        console.log(imageurlArray.slice(10, 40));
+        // console.log(imageurlArray.slice(10, 40));
         fs.truncate("bg_image_urls.txt", 0, function () {
-          console.log("bg_image_urls.txt cleared");
+        //   console.log("bg_image_urls.txt cleared");
         });
         fs.writeFile(
           "bg_image_urls.txt",
           imageurlArray.slice(10, 40).join("\n"),
           function () {
-            console.log("added bg image urls to bg_image_urls");
+            // console.log("added bg image urls to bg_image_urls");
           }
         );
         break;

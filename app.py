@@ -17,7 +17,6 @@ def downloadImgs():
     cwd = os.getcwd()
     cwd = cwd + "\static\img"
     list = open("bg_image_urls.txt").read().splitlines()
-        # with open("bg_image_urls.txt").read().splitlines()
     for line in list:
         img = line
         urllib.request.urlretrieve(img, os.path.join(cwd, os.path.basename(img)))
@@ -34,12 +33,12 @@ def index():
             f.write("fetch_images")
             f.close()
             downloadImgs()
-            # cwd = os.getcwd()
-            # cwd = cwd + "\static\img"
-            # img = random.choice(os.listdir(cwd))
-            # # urllib.request.urlretrieve(img, os.path.join(cwd, os.path.basename(img)))
             return redirect(url_for("randomWallpaper"))
         if request.values.get('getWallpapers') == 'getWallpapers':
+            f = open("image_request.txt", "w")
+            f.write("fetch_images")
+            f.close()
+            downloadImgs()
             return redirect(url_for("wallpapers"))
     return render_template("index.html")
 
@@ -48,7 +47,6 @@ def index():
 
 # code citation, how to return img directory and url https://stackoverflow.com/questions/26052561/how-to-list-all-image-files-in-flask-static-subdirectory
 def wallpapers():
-    downloadImgs()
     imageName = os.listdir(os.path.join(app.static_folder, 'img'))  # microservices will download to static/img
     return render_template('wallpapers.html', imageName = imageName)
 
